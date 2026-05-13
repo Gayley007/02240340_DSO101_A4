@@ -1,58 +1,53 @@
-# 02240340 DSO101 Assignment 4 — Flask CI/CD App
+# DSO101 Assignment 4 - Complete CI/CD Pipeline with Testing & Deployment
 
-A Flask backend application with automated CI/CD via GitHub Actions and deployment to Render.
+**Name:** Gayley Choden
+**Student ID:** 02240340
+
+---
 
 ## Project Structure
 
-```
-project/
-├── app.py                        # Flask application
-├── test_app.py                   # Unit tests (pytest)
-├── requirements.txt              # Python dependencies
-├── render.yaml                   # Render deployment config
-└── .github/workflows/ci.yml     # GitHub Actions CI/CD pipeline
-```
+The project was set up with the following structure:
 
-## API Endpoints
+- `app.py` — the main Flask backend application (Calculator API)
+- `test_app.py` — unit tests
+- `requirements.txt` — project dependencies
+- `Dockerfile` — container configuration for deployment
+- `render.yaml` — Render deployment configuration
+- `.github/workflows/ci.yml` — the CI/CD pipeline workflow
 
-| Method | Endpoint       | Description              |
-|--------|----------------|--------------------------|
-| GET    | `/`            | Home — returns greeting  |
-| GET    | `/health`      | Health check             |
-| GET    | `/add/<a>/<b>` | Returns sum of a and b   |
+---
 
-## Running Locally
+## Unit Tests
 
-```bash
-pip install -r requirements.txt
-python app.py
-```
+A unit test file was created to test the core functionality of the Calculator API. Tests cover all four operations (add, subtract, multiply, divide) including edge cases such as divide-by-zero. Tests were verified to pass locally before pushing to GitHub.
 
-App runs at `http://localhost:5000`.
+![alt text](public/3.png)
 
-## Running Tests
-
-```bash
-pytest -v
-```
+---
 
 ## CI/CD Pipeline
 
-The GitHub Actions workflow (`.github/workflows/ci.yml`) triggers on every push to `main`:
+A GitHub Actions workflow was created at `.github/workflows/ci.yml`. The pipeline runs automatically on every push to the main branch and includes the following steps:
 
-1. **Build** — checks out code, sets up Python 3.9, installs dependencies
-2. **Test** — runs `pytest` with verbose output
-3. **Deploy** — triggers a Render deploy hook (stored as `RENDER_DEPLOY_HOOK_URL` secret)
+- **Checkout** — pulls the latest code
+- **Set up Python** — configures the Python 3.9 environment
+- **Install dependencies** — installs packages from requirements.txt
+- **Run tests** — runs pytest to execute all unit tests
+- **Deploy** — triggers deployment to Render via deploy hook
 
-## Deployment (Render)
+![alt text](public/1.png)
 
-### Steps to set up auto-deploy:
+---
 
-1. Create a new **Web Service** on [Render](https://render.com) and connect this GitHub repo.
-2. Set **Build Command**: `pip install -r requirements.txt`
-3. Set **Start Command**: `gunicorn app:app`
-4. Copy the **Deploy Hook URL** from Render → Settings → Deploy Hook.
-5. Add it as a GitHub secret named `RENDER_DEPLOY_HOOK_URL` under:
-   - GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+## Deployment
 
-Every push to `main` will now automatically test and deploy the app.
+The app was connected to Render with auto-deploy enabled. Every push to the main branch triggers a fresh deployment automatically using Docker.
+
+![alt text](public/2.png)
+
+---
+
+## Live App
+
+https://gayley-app.onrender.com
