@@ -1,9 +1,8 @@
 services:
   - type: web
-    name: flask-cicd-app
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    name: flask-calculator-app
+    runtime: docker
+    dockerfilePath: ./Dockerfile
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.9.0
+      - key: PORT
+        value: 5000
